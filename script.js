@@ -300,8 +300,8 @@ const TOTAL_STEPS = 32;
       quantizationInfo: { stepsPerQuarter: 4}
     }
     let pattern = sequencer.matrix.pattern;
-    for (let row = 0; row<pattern.length; row++) {
-      for (let col = 0; col<pattern[row].length ; col++) {
+    for (let row = 0; row < pattern.length; row++) {
+      for (let col = 0; col < pattern[row].length ; col++) {
         if (pattern[row][col]) {
           input.notes.push({
             quantizedStartStep: col,

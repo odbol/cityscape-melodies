@@ -10,11 +10,17 @@ body {
     color: #373fff;
   }
 
-  
+.buildings {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
 
 .building {
-    width: 1500px;
-    height: 300px;
+    width: 225px;
+    height: auto;
+    margin: 0 20px;
     background: grey;
 }
 

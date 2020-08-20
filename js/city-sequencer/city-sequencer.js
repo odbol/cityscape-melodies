@@ -1,5 +1,40 @@
+const COLS_PER_BUILDING = 8;
+
 class Building {
 
+    constructor(matrix, columnStart, columnEnd) {
+        this.matrix = matrix;
+        this.columnStart = columnStart;
+        this.columnEnd = columnEnd;
+    }
+
+    render() {
+        const html = `<div class="building" id="building_${this.columnStart}">${this.renderContents()}</div>`;
+
+        return html;
+    }
+    
+    renderContents() {
+        let html = '';
+        const pattern = this.matrix.pattern;
+        for (let row = 0; row < pattern.length; row++) {
+            html += this.renderWindowRow(row, pattern[row].length);
+        }
+        return html;
+    }
+
+    renderWindowRow(row) {
+        let html = '<div class="windowRow">';
+        for (let col = this.columnStart; col < this.columnEnd; col++) {
+            html += this.renderWindow(row, col);
+        }
+         
+        return html + '</div>';
+    }
+
+    renderWindow(row, col) {
+        return `<button class="window" data-row="${row}" data-col="${col}" />`;
+    }
 
 }
 
@@ -24,30 +59,20 @@ class CitySequencer {
     }
 
     render() {
-        this.element.innerHTML = `<div class="building">${this.renderContents()}</div>`;
+        this.element.innerHTML = `<div class="buildings">${this.renderContents()}</div>`;
     }
 
     renderContents() {
+        let buildings = [];
         let html = '';
-        let pattern = this.matrix.pattern;
-        for (let row = 0; row < pattern.length; row++) {
-            html += this.renderWindowRow(row, pattern[row].length);
+        const pattern = this.matrix.pattern;
+        for (let buildingIdx = 0; buildingIdx < pattern.length / COLS_PER_BUILDING; buildingIdx++) {
+            const colOffset = buildingIdx * COLS_PER_BUILDING;
+            buildings[buildingIdx] = new Building(this.matrix, colOffset, colOffset + COLS_PER_BUILDING);
+            html += buildings[buildingIdx].render();
         }
          
         return html;
-    }
-
-    renderWindowRow(row, numCols) {
-        let html = '<div class="windowRow">';
-        for (let col = 0; col < numCols; col++) {
-            html += this.renderWindow(row, col);
-        }
-         
-        return html + '</div>';
-    }
-
-    renderWindow(row, col) {
-        return `<button class="window" data-row="${row}" data-col="${col}" />`;
     }
 
     redraw() {
