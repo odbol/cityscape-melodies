@@ -166,7 +166,8 @@ let drumPlayers = new Tone.Players({
 
 
 
-const TOTAL_STEPS = 32;
+const LOOP_STEPS = 32;
+const NUM_MEASURES = 4;
 
 
 
@@ -190,9 +191,9 @@ const TOTAL_STEPS = 32;
   }
   
   let sequencer = new CitySequencer('#sequencer', {
-    columns: TOTAL_STEPS,
+    columns: LOOP_STEPS * NUM_MEASURES,
     rows: 12,
-    size: [550, 200]
+    numMeasures: NUM_MEASURES
   })
   new Tone.Loop((time) => {
     Tone.Draw.schedule(() => sequencer.next(), time);
@@ -265,7 +266,7 @@ const TOTAL_STEPS = 32;
         quantizedStartStep: Tone.Time(time).toTicks() / sixteenthNoteTicks,
         quantizedEndStep: Tone.Time(time).toTicks() / sixteenthNoteTicks + 1
       })),
-      totalQuantizedSteps: TOTAL_STEPS,
+      totalQuantizedSteps: LOOP_STEPS,
       quantizationInfo: {stepsPerQuarter: 4}
     };
     
@@ -296,7 +297,7 @@ const TOTAL_STEPS = 32;
   async function generateMelodies() {
     let input = {
       notes: [],
-      totalQuantizedSteps: TOTAL_STEPS,
+      totalQuantizedSteps: LOOP_STEPS,
       quantizationInfo: { stepsPerQuarter: 4}
     }
     let pattern = sequencer.matrix.pattern;

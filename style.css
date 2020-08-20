@@ -10,14 +10,17 @@ body {
     color: #373fff;
   }
 
+.city {
+    width: 100vw;
+    overflow: scroll;
+}
+
 .buildings {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+    width: 10000px;
 }
 
 .building {
+    display: inline-block;
     width: 225px;
     height: auto;
     margin: 0 20px;

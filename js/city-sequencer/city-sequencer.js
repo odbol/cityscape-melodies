@@ -39,11 +39,13 @@ class Building {
 }
 
 class CitySequencer {
+    buildings = [];
     target = new EventTarget();
 
     constructor(element, opts) {
         this.matrix = new Nexus.Matrix(opts.rows, opts.columns);
         this.matrix.populate.all([0]);
+        this.numMeasures = opts.numMeasures;
         this.element = document.querySelector(element);
 
         this.render();
@@ -63,13 +65,16 @@ class CitySequencer {
     }
 
     renderContents() {
-        let buildings = [];
         let html = '';
         const pattern = this.matrix.pattern;
-        for (let buildingIdx = 0; buildingIdx < pattern.length / COLS_PER_BUILDING; buildingIdx++) {
-            const colOffset = buildingIdx * COLS_PER_BUILDING;
-            buildings[buildingIdx] = new Building(this.matrix, colOffset, colOffset + COLS_PER_BUILDING);
-            html += buildings[buildingIdx].render();
+        for (let buildingIdx = 0; buildingIdx < pattern[0].length / COLS_PER_BUILDING; buildingIdx++) {
+            let building = this.buildings[buildingIdx];
+            if (!building) {
+                const colOffset = buildingIdx * COLS_PER_BUILDING;
+                building = new Building(this.matrix, colOffset, colOffset + COLS_PER_BUILDING);
+                this.buildings[buildingIdx] = building;
+            }
+            html += building.render();
         }
          
         return html;
@@ -104,13 +109,12 @@ class CitySequencer {
     }
 
     setGeneratedNotes(notes) {
-        const numCols = this.matrix.pattern[0].length;
         for (let note of notes) {
-            let column = note.quantizedStartStep % numCols;
+            let column = note.quantizedStartStep;
             let noteName = Tone.Frequency(note.pitch, 'midi').toNote();
             let row = sequencerRows.indexOf(noteName);
             if (row >= 0) {
-                this.matrix.set.cell(column, row, 2 + Math.floor(note.quantizedStartStep / numCols));
+                this.matrix.set.cell(column, row, 1);
             }
         }
         this.redraw();
