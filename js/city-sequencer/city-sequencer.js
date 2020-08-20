@@ -55,7 +55,7 @@ class CitySequencer {
         const windows = this.element.querySelectorAll('.window');
         for (let window of windows) {
             const {row, col} = window.dataset;
-            window.dataset.selected = pattern[row][col] != 0;
+            window.dataset.note = pattern[row][col];
         }
         // let pattern = sequencer.matrix.pattern;
         // for (let row = 0; row < pattern.length; row++) {
@@ -76,5 +76,19 @@ class CitySequencer {
     onWindowClicked(row, col) {
         this.matrix.toggle.cell(Number(col), Number(row));
         this.target.dispatchEvent(new CustomEvent('change'));
+    }
+
+    setGeneratedNotes(notes) {
+        const numCols = this.matrix.pattern[0].length;
+        for (let note of notes) {
+            let column = note.quantizedStartStep % numCols;
+            let noteName = Tone.Frequency(note.pitch, 'midi').toNote();
+            let row = sequencerRows.indexOf(noteName);
+            if (row >= 0) {
+                this.matrix.set.cell(column, row, 2 + Math.floor(note.quantizedStartStep / numCols));
+            }
+        }
+        this.redraw();
+        // DON'T CALL CHANGE EVENT HERE, it will infinite loop!
     }
 }

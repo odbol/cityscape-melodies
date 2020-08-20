@@ -331,5 +331,7 @@ const TOTAL_STEPS = 32;
         Tone.Frequency(note.pitch, 'midi').toNote()
       )
     }
+    sequencer.setGeneratedNotes(all.notes);
+
     console.log(all);
   }

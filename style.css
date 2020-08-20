@@ -13,7 +13,7 @@ body {
   
 
 .building {
-    width: 500px;
+    width: 1500px;
     height: 300px;
     background: grey;
 }
@@ -31,6 +31,29 @@ body {
 }
 
 
-.building .window[data-selected='true'] {
+.building .window[data-note='true'] {
     background: yellow;
+}
+
+.building .window[data-note='1'] {
+    background: yellow;
+}
+
+.building .window[data-note='2'] {
+    background: greenyellow;
+}
+.building .window[data-note='3'] {
+    background: blue;
+}
+.building .window[data-note='4'] {
+    background: violet;
+}
+.building .window[data-note='5'] {
+    background: rgb(130, 198, 238);
+}
+.building .window[data-note='6'] {
+    background: rgb(47, 92, 49);
+}
+.building .window[data-note='7'] {
+    background: rgb(238, 191, 130);
 }
