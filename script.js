@@ -27,7 +27,11 @@ let drumPlayers = new Tone.Players({
     },
     volume: -4
   })
-  let leadDelay = new Tone.PingPongDelay('8n.', 0.3)
+  let leadDelay = new Tone.PingPongDelay({
+        delayTime: '8n.', 
+        feedback: 0.3,
+        wet: 0.2,
+    });
   leadSampler.connect(leadDelay);
   leadDelay.toDestination();
   let leadReverb = new Tone.Reverb({decay: 3, wet: 0.5})
