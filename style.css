@@ -9,4 +9,28 @@ body {
     font-style: italic;
     color: #373fff;
   }
+
   
+
+.building {
+    width: 500px;
+    height: 300px;
+    background: grey;
+}
+
+.building .windowRow {
+    width: 100%;
+}
+
+.building .window {
+    margin: 4px;
+    width: 32px;
+    height: 50px;
+    background: #a4addd;
+    border: #333 solid 2px;
+}
+
+
+.building .window[data-selected='true'] {
+    background: yellow;
+}

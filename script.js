@@ -151,6 +151,28 @@ let drumPlayers = new Tone.Players({
   leadPart.loopStart = 0;
   leadPart.loopEnd = '8m';
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // Interaction
   
   document.getElementById("start").onclick = async () => {
@@ -167,7 +189,7 @@ let drumPlayers = new Tone.Players({
     Tone.Transport.bpm.value = newBpm
   }
   
-  let sequencer = new Nexus.Sequencer('#sequencer', {
+  let sequencer = new CitySequencer('#sequencer', {
     columns: 32,
     rows: 12,
     size: [550, 200]
@@ -178,6 +200,20 @@ let drumPlayers = new Tone.Players({
   let sequencerRows = ['B3', 'G#3', 'E3', 'C#3', 'B2', 'G#2', 'E2', 'C#2', 'B1', 'G#1', 'E1', 'C#1'];
   sequencer.on('change', generateMelodies)
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   // Magenta stuff
   
@@ -244,6 +280,16 @@ let drumPlayers = new Tone.Players({
   
   }
   
+
+
+
+
+
+
+
+  /** MELODIES */
+
+
   let melChordsVae = new music_vae.MusicVAE('https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/mel_chords')
   let melChordsLoaded = melChordsVae.initialize()
   
