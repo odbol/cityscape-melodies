@@ -198,7 +198,8 @@ const NUM_MEASURES = 4;
   new Tone.Loop((time) => {
     Tone.Draw.schedule(() => sequencer.next(), time);
   }, '16n').start();
-  let sequencerRows = ['B3', 'G#3', 'E3', 'C#3', 'B2', 'G#2', 'E2', 'C#2', 'B1', 'G#1', 'E1', 'C#1'];
+  const sequencerRowNotes = ['B3', 'G#3', 'E3', 'C#3', 'B2', 'G#2', 'E2', 'C#2', 'B1', 'G#1', 'E1', 'C#1'];
+  let sequencerRowsMidi = sequencerRowNotes.map(note => Tone.Frequency(note).toMidi());
   sequencer.on('change', generateMelodies)
   
 
@@ -307,7 +308,7 @@ const NUM_MEASURES = 4;
           input.notes.push({
             quantizedStartStep: col,
             quantizedEndStep: col + 2,
-            pitch: Tone.Frequency(sequencerRows[row]).toMidi()
+            pitch: sequencerRowsMidi[row]
           })
         }
       }

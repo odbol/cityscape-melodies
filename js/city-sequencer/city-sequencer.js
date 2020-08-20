@@ -119,11 +119,14 @@ class CitySequencer {
     setGeneratedNotes(notes) {
         for (let note of notes) {
             let column = note.quantizedStartStep;
-            let noteName = Tone.Frequency(note.pitch, 'midi').toNote();
-            let row = sequencerRows.indexOf(noteName);
-            if (row >= 0) {
-                this.matrix.set.cell(column, row, 1);
+            let noteMidi = note.pitch;
+            let row = sequencerRowsMidi.indexOf(noteMidi);
+            if (row < 0) {
+                // wrap the note around so it fits on the building.
+                row = (noteMidi % 12);
+                //row = sequencerRowsMidi.length - 1;
             }
+            this.matrix.set.cell(column, row, 1);
         }
         this.redraw();
         // DON'T CALL CHANGE EVENT HERE, it will infinite loop!
