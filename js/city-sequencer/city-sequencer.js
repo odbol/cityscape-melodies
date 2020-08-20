@@ -42,6 +42,8 @@ class CitySequencer {
     buildings = [];
     target = new EventTarget();
 
+    curBeat = 0;
+
     constructor(element, opts) {
         this.matrix = new Nexus.Matrix(opts.rows, opts.columns);
         this.matrix.populate.all([0]);
@@ -62,6 +64,7 @@ class CitySequencer {
 
     render() {
         this.element.innerHTML = `<div class="buildings">${this.renderContents()}</div>`;
+        this.windows = this.element.querySelectorAll('.window');
     }
 
     renderContents() {
@@ -82,8 +85,7 @@ class CitySequencer {
 
     redraw() {
         let pattern = sequencer.matrix.pattern
-        const windows = this.element.querySelectorAll('.window');
-        for (let window of windows) {
+        for (let window of this.windows) {
             const {row, col} = window.dataset;
             window.dataset.note = pattern[row][col];
         }
@@ -97,6 +99,12 @@ class CitySequencer {
 
     next() {
         // TODO: step forward and draw
+        this.curBeat = (this.curBeat + 1) % this.matrix.pattern[0].length;
+
+        for (let window of this.windows) {
+            const {row, col} = window.dataset;
+            window.dataset.highlighted = col == this.curBeat;
+        }
     }
 
     on(eventName, callback) {

@@ -66,3 +66,8 @@ body {
 .building .window[data-note='7'] {
     background: rgb(238, 191, 130);
 }
+
+
+body .building .window[data-highlighted='true'] {
+    box-shadow: rgba(255, 255, 0, 0.774) 0px 2px 9px
+}
